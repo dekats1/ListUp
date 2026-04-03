@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Technology</string>
+    <string-array name="PC">
+        <item>Игровой системный блок PCGallery Ryzen 5 7500F|PCGallery.png|PCGallery.html</item>
+        <item>Игровой системный блок Fandb Ryzen 7-7800X3D|PCFandb.png|PCFandb.html</item>
+        <item>Компьютер FK BY Falcon 170335|PCFKby.png|PCFKby.html</item>
+    </string-array>
+
+    <string-array name="Laptop">
+        <item>Ноутбук ASUS FX707|laptopAsus.png|laptopAsus.html</item>
+        <item>Ноутбук Lenovo ThinkPad T16 Gen 2|laptopLenovo.png|laptopLenovo.html</item>
+        <item>Ноутбук H-Book 15 IPK1|laptopHBook.png|laptopHBook.html</item>
+    </string-array>
+
+    <string-array name="Tablet">
+        <item>Планшет Horizont H-Tab 1+ 8GB/128GB LTE|tabletHorizont.png|tabletHorizont.html</item>
+        <item>Планшет Apple iPad 11" 2025 128GB|tabletApple.png|tabletApple.html</item>
+        <item>Планшет Blackview Mega 3 LTE 12GB/256GB|tabletBlackview.png|tabletBlackview.html</item>
+    </string-array>
+
+        <string-array name="drawer_list">
+            <item>ПК</item>
+            <item>Ноутбуки</item>
+            <item>Планшеты</item>
+        </string-array>
+
+
+</resources>
