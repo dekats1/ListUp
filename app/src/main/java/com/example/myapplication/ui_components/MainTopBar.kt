@@ -15,30 +15,17 @@ import kotlinx.coroutines.launch
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun MainTopBar(title: String, drawerState: DrawerState) {
-    val coroutine= rememberCoroutineScope()
-
+fun MainTopBar(title: String, drawerState: DrawerState, onFavClick: () -> Unit) {
+    val coroutine = rememberCoroutineScope()
     TopAppBar(
-        title = {
-            Text(text = title)
-        },
+        title = { Text(text = title) },
         navigationIcon = {
-            IconButton(
-                onClick = {
-                    coroutine.launch{
-                        drawerState.open(   )
-                    }
-                }
-            ) {
+            IconButton(onClick = { coroutine.launch { drawerState.open() } }) {
                 Icon(imageVector = Icons.Default.Menu, contentDescription = "menu")
             }
         },
         actions = {
-            IconButton(
-                onClick = {
-
-                }
-            ) {
+            IconButton(onClick = { onFavClick() }) {
                 Icon(imageVector = Icons.Default.Favorite, contentDescription = "Favorite")
             }
         }

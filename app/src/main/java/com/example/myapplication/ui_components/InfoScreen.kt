@@ -96,7 +96,6 @@ fun HtmlLoader(htmlName: String, modifier: Modifier = Modifier) {
                     }
                 }
                 settings.javaScriptEnabled = true
-                // Base64 вместо loadData — корректно отображает кириллицу
                 loadData(encodedHtml, "text/html", "base64")
                 webView = this
             }

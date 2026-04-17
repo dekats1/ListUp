@@ -15,7 +15,9 @@ import com.example.myapplication.ui_components.MainScreen
 import com.example.myapplication.utils.ItemSaver
 import com.example.myapplication.utils.ListItem
 import com.example.myapplication.utils.Routes
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +25,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             MyApplicationTheme {
                 var item = rememberSaveable(stateSaver = ItemSaver) {
-                    mutableStateOf(ListItem("", "", ""))
+                    mutableStateOf(
+                        ListItem(id = 0, title = "", imageName = "", htmlName = "", isfav = false, category = "")
+                    )
                 }
                 val navController = rememberNavController()
 
@@ -33,11 +37,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     composable(Routes.MAIN_SCREEN.route) {
                         MainScreen(context = this@MainActivity) { listItem ->
-                            item.value = ListItem(
-                                listItem.title,
-                                listItem.imageName,
-                                listItem.htmlName
-                            )
+                            item.value = listItem.copy()
                             navController.navigate(Routes.INFO_SCREEN.route)
                         }
                     }
