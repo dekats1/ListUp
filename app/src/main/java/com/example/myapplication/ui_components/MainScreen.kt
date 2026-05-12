@@ -2,7 +2,7 @@ package com.example.myapplication.ui_components
 
 import android.annotation.SuppressLint
 import android.content.Context
-import androidx.activity.compose.BackHandler // ВАЖНО: Убедитесь, что этот импорт есть
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -20,6 +20,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.myapplication.MainViewModel
+import com.example.myapplication.utils.AppTheme
 import com.example.myapplication.utils.DrawerEvents
 import com.example.myapplication.utils.ListItem
 import com.example.myapplication.utils.MainListItem
@@ -30,12 +31,12 @@ import kotlinx.coroutines.launch
 fun MainScreen(
     context: Context,
     mainViewModel: MainViewModel = hiltViewModel(),
-    onClick: (ListItem) -> Unit
+    currentTheme: AppTheme,
+    onThemeChange: (AppTheme) -> Unit,
+    onItemClick: (ListItem) -> Unit
 ) {
     val topBarTitle = rememberSaveable { mutableStateOf("ПК") }
-
     val categoryHistory = rememberSaveable { mutableStateOf(listOf("ПК")) }
-
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val mainList = mainViewModel.mainList
@@ -51,8 +52,6 @@ fun MainScreen(
     BackHandler(enabled = categoryHistory.value.size > 1) {
         val newHistory = categoryHistory.value.dropLast(1)
         categoryHistory.value = newHistory
-
-
         topBarTitle.value = newHistory.last()
     }
 
@@ -78,13 +77,16 @@ fun MainScreen(
                 topBar = {
                     MainTopBar(
                         title = topBarTitle.value,
-                        drawerState = drawerState
-                    ) {
-                        if (topBarTitle.value != "Избранные") {
-                            topBarTitle.value = "Избранные"
-                            categoryHistory.value = categoryHistory.value + "Избранные"
+                        drawerState = drawerState,
+                        currentTheme = currentTheme,
+                        onThemeChange = onThemeChange,
+                        onFavClick = {
+                            if (topBarTitle.value != "Избранные") {
+                                topBarTitle.value = "Избранные"
+                                categoryHistory.value = categoryHistory.value + "Избранные"
+                            }
                         }
-                    }
+                    )
                 }
             ) { innerPadding ->
                 LazyColumn(
@@ -93,7 +95,7 @@ fun MainScreen(
                         .fillMaxSize()
                 ) {
                     items(mainList.value) { item ->
-                        MainListItem(item = item) { listItem -> onClick(listItem) }
+                        MainListItem(item = item) { listItem -> onItemClick(listItem) }
                     }
                 }
             }

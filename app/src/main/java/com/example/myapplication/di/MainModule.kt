@@ -19,6 +19,8 @@ object MainModule {
             app,
             MainDb::class.java,
             name = "info.db"
-        ).createFromAsset("db/info.db").build()
+        ).createFromAsset("db/info.db")
+            .fallbackToDestructiveMigration()
+            .build()
     }
 }
